@@ -4,7 +4,7 @@
 
 Import the project in your current repository:
 
-### `git clone https://github.com/maxou75/keewe-test-backend.git`
+### `git clone https://github.com/maxou75/keewe-test.git`
 
 In the project directory, install the dependencies with:
 
