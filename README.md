@@ -25,6 +25,6 @@ I choose to use MUI for UI components. I also have a router with 3 pages for the
 - Payment
 - Payments history
 
-For each component, I used Axios API requests to get the necessary data at initialization. For the conversions and the payment page, there are forms that allows you to fill required data before validating. Validation will be a Post to the backend api.
-For the history, I get all the payments from backend and display them into a table.
-The bank data info in the payment are encrypted before being sent using CryptoJS and a simple key `secret_key`.
+For each component, I used Axios API requests to get the necessary data at initialization. For the conversions and the payment page, there are forms that allow you to fill required data before validating. Validation will be a Post to the backend API.
+For the history, I get all the payments from the backend and display them in a table.
+The bank data information in the payment is encrypted before being sent using CryptoJS and a simple key `secret_key`.
