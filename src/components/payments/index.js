@@ -90,7 +90,6 @@ export default function Payments() {
                             </Typography>
                         }
                         onChange={(value) => {
-                            console.log(value)
                             setCardExpirationDate(value)
                         }}
                     />
@@ -113,7 +112,6 @@ export default function Payments() {
             </Stack>
             <Stack direction="row" marginTop={'40px'} alignItems="center" spacing={3}>
                 <TextField
-                    type={'number'}
                     value={amount}
                     error={!amount}
                     label={
@@ -122,12 +120,14 @@ export default function Payments() {
                         </Typography>
                     }
                     InputProps={{
-                        inputProps: { min: 0 },
                         endAdornment: (
                             <span style={{marginLeft: '10px'}}>€</span>
                         ),
                     }}
-                    onChange={(event) => { setAmount(event.target.value )}}
+                    onChange={(event) => {
+                        const value = event.target.value?.replace(',', '.');
+                        if (!isNaN(value) && (!value?.trim()?.length || parseFloat(value) > 0)) setAmount(value);
+                    }}
                 />
                 <Typography>pour la devise :</Typography>
                 <FormControl style={{width: '100px'}}>
@@ -147,7 +147,7 @@ export default function Payments() {
             {paidResults?.length ?
                 <Stack marginLeft={'10px'} marginTop={'40px'} spacing={2}>
                     {paidResults?.map((paidResult, key) =>
-                        (<Typography key={key}>Vous avez payé {paidResult.paid.toFixed(2)} {paidResult.selectedCurrency?.split('/')[1]}.</Typography>)
+                        (<Typography key={key}>Vous avez payé {paidResult.paid.toFixed(2).replace('.', ',')} {paidResult.selectedCurrency?.split('/')[1]}.</Typography>)
                     )}
                 </Stack> :
                 null}

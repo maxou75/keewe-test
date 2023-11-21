@@ -8,7 +8,6 @@ export default function Historic() {
 
     useEffect(() => {
         getPayments().then(({ data }) => {
-            console.log('data : ', data)
             setTransactions(data)
         }).catch(e => {
             console.log('ERROR: ', e)
@@ -42,7 +41,7 @@ export default function Historic() {
                                     <TableCell component="th" scope="row">
                                         {new Date(t.date).toLocaleDateString()}
                                     </TableCell>
-                                    <TableCell align="right">{parseFloat(t.paid)?.toFixed(2)}</TableCell>
+                                    <TableCell align="right">{parseFloat(t.paid)?.toFixed(2).replace('.', ',')}</TableCell>
                                     <TableCell align="right">{t.currency.split('/')[1]}</TableCell>
                                     <TableCell align="right">{t.status === 'valid' ? 'Validé' : 'Refusé'}</TableCell>
                                 </TableRow>

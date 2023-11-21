@@ -46,15 +46,16 @@ export default function Conversions() {
             <form onSubmit={handleSubmit}>
                 <Stack direction="row" marginTop={'40px'} alignItems="center" spacing={3}>
                     <TextField
-                        type={'number'}
-                        InputProps={{ inputProps: { min: 0 } }}
                         value={amount}
                         label={
                             <Typography>
                                 Montant à convertir
                             </Typography>
                         }
-                        onChange={(event) => { setAmount(event.target.value )}}
+                        onChange={(event) => {
+                            const value = event.target.value?.replace(',', '.');
+                            if (!isNaN(value) && (!value?.trim()?.length || parseFloat(value) > 0)) setAmount(value);
+                        }}
                     />
                     <Typography>en devise :</Typography>
                     <FormControl style={{width: '100px'}}>
@@ -86,7 +87,7 @@ export default function Conversions() {
                 {conversionsResults?.length ?
                     <Stack marginLeft={'10px'} marginTop={'40px'} spacing={2}>
                         {conversionsResults?.map((r, key) =>
-                            (<Typography key={key}>Le montant {parseFloat(r.amount)?.toFixed(2)} {r.selectedCurrency?.split('/')[0]} convertis est de {parseFloat(r.convertedAmount)?.toFixed(2)} {r.selectedCurrency?.split('/')[1]}.</Typography>)
+                            (<Typography key={key}>Le montant {parseFloat(r.amount)?.toFixed(2).replace('.', ',')} {r.selectedCurrency?.split('/')[0]} convertis est de {parseFloat(r.convertedAmount)?.toFixed(2).replace('.', ',')} {r.selectedCurrency?.split('/')[1]}.</Typography>)
                         )}
                     </Stack> :
                     null}

@@ -18,7 +18,8 @@ import PaidIcon from "@mui/icons-material/Paid";
 import ListItemText from "@mui/material/ListItemText";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import HistoryIcon from "@mui/icons-material/History";
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 const drawerWidth = 400;
 
@@ -83,6 +84,12 @@ export default function Home() {
         setActiveTab(r.split('/')[1])
     }
 
+    const pathname = useLocation().pathname;
+    useEffect(() => {
+        const pathnameSplit = pathname?.split('/')
+        setActiveTab(pathnameSplit?.length > 0 ? pathnameSplit[1] : null)
+    }, [pathname])
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
@@ -131,7 +138,7 @@ export default function Home() {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                        <ListItemButton style={{backgroundColor: activeTab === 'payments' || !activeTab ? 'lightgray' : 'initial'}} onClick={() => { onClick('/payments') } }>
+                        <ListItemButton style={{backgroundColor: activeTab === 'payments'}} onClick={() => { onClick('/payments') } }>
                             <ListItemIcon>
                                 <PaidIcon />
                             </ListItemIcon>
