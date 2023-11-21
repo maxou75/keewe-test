@@ -82,7 +82,7 @@ export default function Conversions() {
                         </Select>
                     </FormControl>
                 </Stack>
-                <Button style={{marginTop: '30px'}} variant="contained" type={'submit'} disabled={!selectedCurrency1 || !selectedCurrency2 || !amount}>Payer</Button>
+                <Button style={{marginTop: '30px'}} variant="contained" type={'submit'} disabled={!selectedCurrency1 || !selectedCurrency2 || !amount}>Convertier</Button>
                 {conversionsResults?.length ?
                     <Stack marginLeft={'10px'} marginTop={'40px'} spacing={2}>
                         {conversionsResults?.map((r, key) =>
