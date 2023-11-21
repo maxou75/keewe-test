@@ -1,7 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
-import {Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Select, Stack} from "@mui/material";
 import {getConversion, getCurrencies} from "../../api";
+import Amount from "../atoms/amount";
 
 export default function Conversions() {
     const [currenciesLabel, setCurrenciesLabel] = useState({});
@@ -45,23 +46,13 @@ export default function Conversions() {
             </Typography>
             <form onSubmit={handleSubmit}>
                 <Stack direction="row" marginTop={'40px'} alignItems="center" spacing={3}>
-                    <TextField
-                        value={amount}
-                        label={
-                            <Typography>
-                                Montant à convertir
-                            </Typography>
-                        }
-                        onChange={(event) => {
-                            const value = event.target.value?.replace(',', '.');
-                            if (!isNaN(value) && (!value?.trim()?.length || parseFloat(value) > 0)) setAmount(value);
-                        }}
-                    />
+                    <Amount amount={amount} setAmount={setAmount} withAdornment={false} label={'Montant à convertir'}></Amount>
                     <Typography>en devise :</Typography>
                     <FormControl style={{width: '100px'}}>
                         <InputLabel>Dev.</InputLabel>
                         <Select label="Age"
                                 defaultValue={''}
+                                error={!selectedCurrency1}
                                 value={selectedCurrency1}
                                 onChange={(event) => { setSelectedCurrency1(event.target.value)}}>
                             {Object.entries(currenciesLabel).map(([key, value]) =>
@@ -74,6 +65,7 @@ export default function Conversions() {
                         <InputLabel>Dev.</InputLabel>
                         <Select disabled={!selectedCurrency1}
                                 label="Age"
+                                error={selectedCurrency1 && !selectedCurrency2}
                                 defaultValue={''}
                                 value={selectedCurrency2}
                                 onChange={(event) => { setSelectedCurrency2(event.target.value)}}>
@@ -83,11 +75,11 @@ export default function Conversions() {
                         </Select>
                     </FormControl>
                 </Stack>
-                <Button style={{marginTop: '30px'}} variant="contained" type={'submit'} disabled={!selectedCurrency1 || !selectedCurrency2 || !amount}>Convertier</Button>
+                <Button style={{marginTop: '30px'}} variant="contained" type={'submit'} disabled={!selectedCurrency1 || !selectedCurrency2 || !amount}>Convertir</Button>
                 {conversionsResults?.length ?
                     <Stack marginLeft={'10px'} marginTop={'40px'} spacing={2}>
                         {conversionsResults?.map((r, key) =>
-                            (<Typography key={key}>Le montant {parseFloat(r.amount)?.toFixed(2).replace('.', ',')} {r.selectedCurrency?.split('/')[0]} convertis est de {parseFloat(r.convertedAmount)?.toFixed(2).replace('.', ',')} {r.selectedCurrency?.split('/')[1]}.</Typography>)
+                            (<Typography key={key}>Le montant {parseFloat(r.amount)?.toFixed(2).replace('.', ',')} {r.currency?.split('/')[0]} convertis est de {parseFloat(r.convertedAmount)?.toFixed(2).replace('.', ',')} {r.currency?.split('/')[1]}.</Typography>)
                         )}
                     </Stack> :
                     null}

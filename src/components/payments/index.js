@@ -7,6 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
+import Amount from "../atoms/amount";
 
 export default function Payments() {
     const [currencies, setCurrencies] = useState({});
@@ -111,24 +112,7 @@ export default function Payments() {
                 />
             </Stack>
             <Stack direction="row" marginTop={'40px'} alignItems="center" spacing={3}>
-                <TextField
-                    value={amount}
-                    error={!amount}
-                    label={
-                        <Typography>
-                            Montant à payer
-                        </Typography>
-                    }
-                    InputProps={{
-                        endAdornment: (
-                            <span style={{marginLeft: '10px'}}>€</span>
-                        ),
-                    }}
-                    onChange={(event) => {
-                        const value = event.target.value?.replace(',', '.');
-                        if (!isNaN(value) && (!value?.trim()?.length || parseFloat(value) > 0)) setAmount(value);
-                    }}
-                />
+                <Amount amount={amount} setAmount={setAmount} label={'Montant à payer'}></Amount>
                 <Typography>pour la devise :</Typography>
                 <FormControl style={{width: '100px'}}>
                     <InputLabel>Dev.</InputLabel>
@@ -147,7 +131,7 @@ export default function Payments() {
             {paidResults?.length ?
                 <Stack marginLeft={'10px'} marginTop={'40px'} spacing={2}>
                     {paidResults?.map((paidResult, key) =>
-                        (<Typography key={key}>Vous avez payé {paidResult.paid.toFixed(2).replace('.', ',')} {paidResult.selectedCurrency?.split('/')[1]}.</Typography>)
+                        (<Typography key={key}>Vous avez payé {paidResult.paid.toFixed(2).replace('.', ',')} {paidResult.currency?.split('/')[1]}.</Typography>)
                     )}
                 </Stack> :
                 null}
