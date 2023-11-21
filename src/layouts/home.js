@@ -138,7 +138,7 @@ export default function Home() {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                        <ListItemButton style={{backgroundColor: activeTab === 'payments'}} onClick={() => { onClick('/payments') } }>
+                        <ListItemButton style={{backgroundColor: activeTab === 'payments' ? 'lightgray' : 'initial'}} onClick={() => { onClick('/payments') } }>
                             <ListItemIcon>
                                 <PaidIcon />
                             </ListItemIcon>
