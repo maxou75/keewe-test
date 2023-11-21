@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CryptoJS from 'crypto-js';
+import dayjs from 'dayjs';
 
 export default function Payments() {
     const [currencies, setCurrencies] = useState({});
@@ -78,6 +79,7 @@ export default function Payments() {
                     <DatePicker
                         sx={{ width: '150px'}}
                         format={'MM/YY'}
+                        minDate={dayjs()}
                         views={['month', 'year']}
                         InputProps={{ inputProps: { min: 0 } }}
                         value={cardExpirationDate}

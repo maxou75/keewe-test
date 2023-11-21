@@ -72,11 +72,16 @@ const defaultTheme = createTheme();
 
 export default function Home() {
     const [open, setOpen] = React.useState(true);
+    const [activeTab, setActiveTab] = React.useState(null);
     const toggleDrawer = () => {
         setOpen(!open);
     };
 
     const navigate = useNavigate();
+    const onClick = (r) => {
+        navigate(r)
+        setActiveTab(r.split('/')[1])
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -126,19 +131,19 @@ export default function Home() {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                        <ListItemButton onClick={() => { navigate('/payments') } }>
+                        <ListItemButton style={{backgroundColor: activeTab === 'payments' ? 'lightgray' : 'initial'}} onClick={() => { onClick('/payments') } }>
                             <ListItemIcon>
                                 <PaidIcon />
                             </ListItemIcon>
                             <ListItemText primary="Paiements" />
                         </ListItemButton>
-                        <ListItemButton onClick={() => { navigate('/conversions') } }>
+                        <ListItemButton style={{backgroundColor: activeTab === 'conversions' ? 'lightgray' : 'initial'}} onClick={() => { onClick('/conversions') } }>
                             <ListItemIcon>
                                 <AccountBalanceIcon />
                             </ListItemIcon>
                             <ListItemText primary="Conversions de devises" />
                         </ListItemButton>
-                        <ListItemButton onClick={() => { navigate('/historic') } }>
+                        <ListItemButton style={{backgroundColor: activeTab === 'historic' ? 'lightgray' : 'initial'}}onClick={() => { onClick('/historic') } }>
                             <ListItemIcon>
                                 <HistoryIcon />
                             </ListItemIcon>

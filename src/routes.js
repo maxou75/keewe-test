@@ -11,6 +11,7 @@ export default function Router() {
             path: '/',
             element: <HomeLayout homePage={true}/>,
             children: [
+                { path: '/', element: <Navigate to="/payments" replace />},
                 { path: 'payments', element: <Payments /> },
                 { path: 'conversions', element: <Conversions /> },
                 { path: 'historic', element: <Historic /> },
@@ -18,7 +19,7 @@ export default function Router() {
         },
         {
             path: '*',
-            element: <Navigate to="/" replace />,
+            element: <Navigate to="/payments" replace />,
         },
     ])
 }
